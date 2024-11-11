@@ -1660,7 +1660,7 @@ _Appears in:_
 | `aws` _[AWSCloudSpec](#awscloudspec)_ | {{< unsafe >}}AWS defines the configuration data of the Amazon Web Services(AWS) cloud provider.{{< /unsafe >}} |
 | `azure` _[AzureCloudSpec](#azurecloudspec)_ | {{< unsafe >}}Azure defines the configuration data of the Microsoft Azure cloud.{{< /unsafe >}} |
 | `openstack` _[OpenstackCloudSpec](#openstackcloudspec)_ | {{< unsafe >}}Openstack defines the configuration data of an OpenStack cloud.{{< /unsafe >}} |
-| `packet` _[PacketCloudSpec](#packetcloudspec)_ | {{< unsafe >}}Packet defines the configuration data of a Packet cloud.{{< /unsafe >}} |
+| `packet` _[PacketCloudSpec](#packetcloudspec)_ | {{< unsafe >}}Packet defines the configuration data of a Packet / Equinix Metal cloud.{{< /unsafe >}} |
 | `hetzner` _[HetznerCloudSpec](#hetznercloudspec)_ | {{< unsafe >}}Hetzner defines the configuration data of the Hetzner cloud.{{< /unsafe >}} |
 | `vsphere` _[VSphereCloudSpec](#vspherecloudspec)_ | {{< unsafe >}}VSphere defines the configuration data of the vSphere.{{< /unsafe >}} |
 | `gcp` _[GCPCloudSpec](#gcpcloudspec)_ | {{< unsafe >}}GCP defines the configuration data of the Google Cloud Platform(GCP).{{< /unsafe >}} |
@@ -2689,6 +2689,7 @@ _Appears in:_
 | `customNetworkPolicies` _[CustomNetworkPolicy](#customnetworkpolicy) array_ | {{< unsafe >}}Optional: CustomNetworkPolicies allows to add some extra custom NetworkPolicies, that are deployed<br />in the dedicated infra KubeVirt cluster. They are added to the defaults.{{< /unsafe >}} |
 | `images` _[KubeVirtImageSources](#kubevirtimagesources)_ | {{< unsafe >}}Images represents standard VM Image sources.{{< /unsafe >}} |
 | `infraStorageClasses` _[KubeVirtInfraStorageClass](#kubevirtinfrastorageclass) array_ | {{< unsafe >}}Optional: InfraStorageClasses contains a list of KubeVirt infra cluster StorageClasses names<br />that will be used to initialise StorageClasses in the tenant cluster.<br />In the tenant cluster, the created StorageClass name will have as name:<br />kubevirt-<infra-storageClass-name>{{< /unsafe >}} |
+| `providerNetwork` _[ProviderNetwork](#providernetwork)_ | {{< unsafe >}}Optional: ProviderNetwork describes the infra cluster network fabric that is being used{{< /unsafe >}} |
 
 
 [Back to top](#top)
@@ -4233,6 +4234,9 @@ _Appears in:_
 | `name` _string_ | {{< unsafe >}}{{< /unsafe >}} |
 | `isDefaultClass` _boolean_ | {{< unsafe >}}Optional: IsDefaultClass. If true, the created StorageClass in the tenant cluster will be annotated with:<br />storageclass.kubernetes.io/is-default-class : true<br />If missing or false, annotation will be:<br />storageclass.kubernetes.io/is-default-class : false{{< /unsafe >}} |
 | `volumeBindingMode` _[VolumeBindingMode](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#volumebindingmode-v1-storage)_ | {{< unsafe >}}VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound. When unset,<br />VolumeBindingImmediate is used.{{< /unsafe >}} |
+| `labels` _object (keys:string, values:string)_ | {{< unsafe >}}Labels is a map of string keys and values that can be used to organize and categorize<br />(scope and select) objects. May match selectors of replication controllers<br />and services.{{< /unsafe >}} |
+| `zones` _string array_ | {{< unsafe >}}Zones represent a logical failure domain. It is common for Kubernetes clusters to span multiple zones<br />for increased availability{{< /unsafe >}} |
+| `regions` _string array_ | {{< unsafe >}}Regions represents a larger domain, made up of one or more zones. It is uncommon for Kubernetes clusters<br />to span multiple regions{{< /unsafe >}} |
 
 
 [Back to top](#top)
@@ -5883,6 +5887,17 @@ _Appears in:_
 
 
 
+### ProviderNetwork
+
+_Underlying type:_ `[struct{Name string "json:\"name\""; VPCs []VPC "json:\"vpcs,omitempty\""}](#struct{name-string-"json:\"name\"";-vpcs-[]vpc-"json:\"vpcs,omitempty\""})`
+
+ProviderNetwork describes the infra cluster network fabric that is being used.
+
+_Appears in:_
+- [DatacenterSpecKubevirt](#datacenterspeckubevirt)
+
+
+
 ### ProviderPreset
 
 
@@ -6488,6 +6503,24 @@ _Appears in:_
 
 
 
+### Subnet
+
+
+
+Subnet a smaller, segmented portion of a larger network, like a Virtual Private Cloud (VPC).
+
+_Appears in:_
+- [VPC](#vpc)
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | {{< unsafe >}}{{< /unsafe >}} |
+
+
+[Back to top](#top)
+
+
+
 ### SubnetCIDR
 
 _Underlying type:_ `string`
@@ -6920,6 +6953,8 @@ _Appears in:_
 
 
 [Back to top](#top)
+
+
 
 
 
